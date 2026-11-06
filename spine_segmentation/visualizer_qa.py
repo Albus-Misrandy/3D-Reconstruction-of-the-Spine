@@ -78,7 +78,7 @@ def generate_qa_report(
     ct_norm = apply_bone_window(ct_vol, wl=350, ww=1800)
 
     # Prepare figure with 3 orthogonal views
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6), dpi=150)
+    fig, axes = plt.subplots(1, 3, figsize=(18, 7), dpi=150)
     fig.patch.set_facecolor('#1a1a1a')
 
     # Color map for segmentation overlay
@@ -128,7 +128,7 @@ def generate_qa_report(
         y=0.98
     )
 
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0, 1, 0.86])
     plt.savefig(str(output_png_path), bbox_inches='tight', facecolor=fig.get_facecolor())
     plt.close()
 
