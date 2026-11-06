@@ -15,6 +15,11 @@ from scipy.ndimage import center_of_mass
 
 from spine_segmentation.config import VERTEBRAE_LABELS
 
+# ----------------- 添加以下两行配置以支持中文显示 -----------------
+plt.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'DejaVu Sans']  # 优先调用黑体或微软雅黑
+plt.rcParams['axes.unicode_minus'] = False                                      # 保证坐标轴负号正常显示
+# ------------------------------------------------------------------
+
 
 def apply_bone_window(ct_data: np.ndarray, wl: float = 350.0, ww: float = 1800.0) -> np.ndarray:
     """
