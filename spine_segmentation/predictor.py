@@ -141,6 +141,21 @@ class SpinePredictor:
             # res is tuple: (seg, softmax)
             softmax_pred = res[1]
 
+            # 在 predictor.py 的 softmax_pred = res[1] 之后添加：
+            pred_labels = np.argmax(softmax_pred, axis=0)
+            fg_mask = pred_labels > 0
+            if np.any(fg_mask):
+                fg_probs = softmax_pred[:, fg_mask]  # shape: (C, N_fg)
+                max_probs = np.max(fg_probs, axis=0)
+                entropy = -np.sum(fg_probs * np.log(np.clip(fg_probs, 1e-7, 1.0)), axis=0)
+                self.last_inference_stats = {
+                    "mean_fg_confidence": float(np.mean(max_probs)),
+                    "mean_fg_entropy": float(np.mean(entropy)),
+                    "low_conf_voxel_pct": float(np.mean(max_probs < 0.80) * 100.0),
+                }
+            else:
+                self.last_inference_stats = None
+
         print(f"      Inference completed in {time.time()-inference_t0:.2f}s")
 
         # Step 3: Resample prediction back to original resolution and save NIfTI

@@ -13,6 +13,11 @@ from spine_segmentation.marching_cubes_stl import MarchingCubesSTLExporter, extr
 from spine_segmentation.itksnap_helper import launch_itksnap_session, generate_itksnap_label_description
 from spine_segmentation.visualizer_qa import generate_qa_report
 from spine_segmentation.finetuner import finetune_on_clinical_cohort
+from spine_segmentation.metrics import (
+    evaluate_ct_image_quality,
+    evaluate_against_ground_truth,
+    print_metrics_report,
+)
 
 __all__ = [
     "VERTEBRAE_LABELS",
